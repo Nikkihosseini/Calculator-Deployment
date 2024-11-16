@@ -1,7 +1,7 @@
 # Calculator
 
-## Quick access:
-https://nikkihosseini.github.io/Calculator-Deployment/
+## <a href="https://nikkihosseini.github.io/Calculator-Deployment/"></a> for quick access
+
 
 
 

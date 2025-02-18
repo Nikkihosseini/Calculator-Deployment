@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./slyles/app.css">
+    <title>calculator</title>
+    <script type="text/javascript">
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+</head>
+<body class="font-PopinsBold text-xl bg-lightBlue-100 dark:bg-darkBlue-150 flex flex-col items-center justify-center w-full h-screen relative">
+      <!--  ***  SVG  ***  -->
+       <svg class="hidden">
+           <symbol id="backspace" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+               <path fill-rule="evenodd" d="M6.414 3c-.464 0-.909.184-1.237.513L1.22 7.47a.75.75 0 0 0 0 1.06l3.957 3.957A1.75 1.75 0 0 0 6.414 13h5.836A2.75 2.75 0 0 0 15 10.25v-4.5A2.75 2.75 0 0 0 12.25 3H6.414ZM8.28 5.72a.75.75 0 0 0-1.06 1.06L8.44 8 7.22 9.22a.75.75 0 1 0 1.06 1.06L9.5 9.06l1.22 1.22a.75.75 0 1 0 1.06-1.06L10.56 8l1.22-1.22a.75.75 0 0 0-1.06-1.06L9.5 6.94 8.28 5.72Z" clip-rule="evenodd" />
+           </symbol>
+           <symbol id="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+               <path d="M8 1a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 1ZM10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM12.95 4.11a.75.75 0 1 0-1.06-1.06l-1.062 1.06a.75.75 0 0 0 1.061 1.062l1.06-1.061ZM15 8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 15 8ZM11.89 12.95a.75.75 0 0 0 1.06-1.06l-1.06-1.062a.75.75 0 0 0-1.062 1.061l1.061 1.06ZM8 12a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 8 12ZM5.172 11.89a.75.75 0 0 0-1.061-1.062L3.05 11.89a.75.75 0 1 0 1.06 1.06l1.06-1.06ZM4 8a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5A.75.75 0 0 1 4 8ZM4.11 5.172A.75.75 0 0 0 5.173 4.11L4.11 3.05a.75.75 0 1 0-1.06 1.06l1.06 1.06Z" />
+           </symbol>
+           <symbol id="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+               <path d="M14.438 10.148c.19-.425-.321-.787-.748-.601A5.5 5.5 0 0 1 6.453 2.31c.186-.427-.176-.938-.6-.748a6.501 6.501 0 1 0 8.585 8.586Z" />
+           </symbol>
+       </svg>
+      <!--  ***  Main  ***  -->
+       <div class="relative overflow-hidden">
+           <!--  ***  Circles  ***  -->
+           <div class="absolute bg-circle-100 dark:bg-circleDark-100 w-60 h-60 rounded-full top-[-18px] left-[-12px] -z-10"></div>
+           
+           <div class="absolute bg-circle-200 dark:bg-circleDark-200 w-60 h-60 rounded-full bottom-[-18px] right-[-12px] -z-10"></div>
+           <div class="flex flex-col p-4 md:p-7 rounded-3xl backdrop-blur-3xl">
+           <!--  ***  Result  ***  -->
+               <div class="h-32 mb-4 max-w-60">
+                   <div id="typeIng" class="bg-transparent break-all text-lightBlue-750 dark:text-gray-150 h-16 pr-12 w-[calc(100%+3rem)] overflow-y-scroll"></div>
+                   <div id="result" class="bg-transparent h-16 pr-12 w-[calc(100%+3rem)] break-all text-2xl text-lightBlue-550 dark:text-darkBlue-100 overflow-y-scroll"></div>
+               </div>
+           <!--  ***  Signs  ***  -->
+               <div>
+                   <div class="flex items-center gap-x-4 mb-4">
+                       <div class="toggleTheme flex items-center justify-center w-12 h-6 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl cursor-pointer hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550">
+                           <svg class="hidden dark:block w-4 h-4 text-lightBlue-200 dark:text-darkBlue-250">
+                               <use href="#sun"></use>
+                           </svg>
+                           <svg class="block dark:hidden w-4 h-4 text-lightBlue-200 dark:text-darkBlue-250">
+                               <use href="#moon"></use>
+                           </svg>
+                       </div>
+                       <div class="flex items-center justify-center w-12 h-6 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer"></div>
+                       <div class="flex items-center justify-center w-12 h-6 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer"></div>
+                       <div class="flex items-center justify-center w-12 h-6 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer"></div>
+                   </div>
+                   <div class="grid gap-4 grid-cols-4 grid-rows-5">
+                       <div id="clear" class="flex items-center justify-center w-12 h-12 text-lightBlue-350 dark:text-darkBlue-400 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">CL</div>
+                       <div id="back-space" class="flex items-center justify-center w-12 h-12 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">
+                       <span class="text-lightBlue-350 dark:text-darkBlue-400">
+                           <svg class="w-6 h-6">
+                               <use href="#backspace"></use>
+                           </svg>
+                       </span>
+                       </div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-350 dark:text-darkBlue-400 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">/</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 pt-1.5 text-lightBlue-350 dark:text-darkBlue-400 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">*</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">7</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">8</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">9</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-350 dark:text-darkBlue-400 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">-</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">4</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">5</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">6</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-350 dark:text-darkBlue-400 bg-lightBlue-300 dark:bg-darkBlue-350 rounded-xl hover:bg-lightBlue-650 dark:hover:bg-darkBlue-600 cursor-pointer">+</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">1</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">2</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">3</div>
+                       <div class="num-btn flex items-center justify-center col-span-2 w-full h-full text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">0</div>
+                       <div class="num-btn flex items-center justify-center w-12 h-12 pb-3 text-lightBlue-200 dark:text-darkBlue-250 bg-lightBlue-250 dark:bg-darkBlue-300 rounded-xl hover:bg-lightBlue-600 dark:hover:bg-darkBlue-550 cursor-pointer">.</div>
+                       <div id="equal" class="flex items-center justify-center col-start-4 row-start-4 row-span-2 w-12 text-lightBlue-450 dark:text-darkBlue-500 bg-lightBlue-400 dark:bg-darkBlue-450 rounded-xl hover:bg-lightBlue-700 dark:hover:bg-darkBlue-650 cursor-pointer">=</div>
+                   </div>
+               </div>
+           </div>
+       </div>
+      <!--  ***  Footer  ***  -->
+      <footer class="text-lightBlue-550 dark:text-darkBlue-100 text-sm mt-10">
+          <p class="flex items-center gap-1.5">
+              Copyright ©
+              <script>
+                  document.write(new Date().getFullYear())
+              </script>
+              <a class="flex items-center gap-1.5" href="https://github.com/nikkihosseini" target="_blank">
+                 <span>NikkiHosseini</span>
+              </a>
+          </p>
+
+      </footer>
+      <script src="../Public/script/app.js"></script>
+</body>
+</html>
